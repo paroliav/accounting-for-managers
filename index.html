@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <title>Vivek</title>
+
+    <script>
+        function calculate() {
+        var roa = document.getElementById('npat').value / document.getElementById('assets').value
+        var roe = document.getElementById('npat').value / document.getElementById('equity').value
+        document.getElementById('roa').innerHTML = roa
+        document.getElementById('roe').innerHTML = roe
+        }
+    </script>
+</head>
+<body>
+<center>
+<h1>Accounting for Managers</h1>
+<form name="accounting_form">
+    Profit(NPAT): <input type="text" id="npat"/><br><br>
+    Assets: <input type="text" id="assets"/><br><br>
+    Equity: <input type="text" id="equity"/><br><br>
+    <input type="button" onclick="calculate()" value="Calculate" />
+</form>
+<br><br>
+<span>ROA : </span> <span id="roa"></span><br><br>
+<span>ROE : </span> <span id="roe"></span><br><br>
+<script src="node_modules/jquery/dist/jquery.slim.min.js"></script>
+<script src="node_modules/popper.js/dist/umd/popper.min.js"></script>
+<script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+</center>
+</body>
+</html>
