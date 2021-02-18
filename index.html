@@ -7,29 +7,138 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
-    <title>Vivek</title>
+    <title>Accounting for managers</title>
+
+    <style>
+        .height{
+            height: 3em;
+        }
+        .collapsible {
+          background-color: #777;
+          color: white;
+          cursor: pointer;
+          padding: 18px;
+          width: 70%;
+          border: none;
+          text-align: left;
+          outline: none;
+          font-size: 15px;
+        }
+
+        .active, .collapsible:hover {
+          background-color: #555;
+        }
+
+        .collapsible:after {
+          content: '\002B';
+          color: white;
+          font-weight: bold;
+          float: right;
+          margin-left: 5px;
+        }
+
+        .active:after {
+          content: "\2212";
+        }
+
+        .content {
+          padding: 0 18px;
+          max-height: 0;
+          width: 70%;
+          overflow: hidden;
+          transition: max-height 0.2s ease-out;
+          background-color: #f1f1f1;
+        }
+    </style>
 
     <script>
         function calculate() {
-        var roa = document.getElementById('npat').value / document.getElementById('assets').value
-        var roe = document.getElementById('npat').value / document.getElementById('equity').value
-        document.getElementById('roa').innerHTML = roa
-        document.getElementById('roe').innerHTML = roe
+            document.getElementById('pM').innerHTML = pM()
+            document.getElementById('aT').innerHTML = aT()
+            document.getElementById('leverage').innerHTML = leverage()
+            document.getElementById('roa').innerHTML = roa()
+            document.getElementById('roe').innerHTML = roe()
+
+            document.getElementById('roa_npat').innerHTML = roa_npat()
         }
+
+        let aT = () => {
+          return document.getElementById('sales').value / document.getElementById('assets').value;
+        }
+
+        let pM = () => {
+            return document.getElementById('npat').value / document.getElementById('sales').value;
+        }
+
+        let leverage = () => {
+            return document.getElementById('assets').value / document.getElementById('equity').value;
+        }
+
+        let roa = () => {
+         return aT() * pM();
+        }
+
+        let roe = () => {
+         return roa() * leverage();
+        }
+
+        let roa_npat = () => {
+         return document.getElementById('npat').value / document.getElementById('assets').value;
+        }
+
     </script>
 </head>
 <body>
 <center>
 <h1>Accounting for Managers</h1>
 <form name="accounting_form">
-    Profit(NPAT): <input type="text" id="npat"/><br><br>
-    Assets: <input type="text" id="assets"/><br><br>
-    Equity: <input type="text" id="equity"/><br><br>
-    <input type="button" onclick="calculate()" value="Calculate" />
+    <table>
+        <tr class="height"><td>Sales:</td><td><input type="text" id="sales"/></td></tr>
+        <tr class="height"><td>Assets:</td><td><input type="text" id="assets"/></td></tr>
+        <tr class="height"><td>Equity:</td><td><input type="text" id="equity"/></td></tr>
+        <tr class="height"><td>Profit(NPAT):</td><td><input type="text" id="npat"/></td></tr>
+        <tr class="height"><td>Profit(EBIT):</td><td><input type="text" id="ebit"/></td></tr>
+
+    <tr><td></td><td><input type="button" onclick="calculate()" value="Calculate" /></td></tr>
+    </table>
 </form>
 <br><br>
-<span>ROA : </span> <span id="roa"></span><br><br>
-<span>ROE : </span> <span id="roe"></span><br><br>
+    <button type="button" class="collapsible">DuPont Model</button>
+    <div class="content">
+        <span><b>Asset Turnover</b> (Sales/Total Assets): </span> <span id="aT"></span><br><br>
+        <span><b>Profit Margin</b> (NPAT/Sales): </span> <span id="pM"></span><br><br>
+        <span><b>Leverage</b> (Total assets/Total Equity): </span> <span id="leverage"></span><br><br>
+        <span><b>ROA</b> (Asset turnover * Profit Margin): </span> <span id="roa"></span><br><br>
+        <span><b>ROE</b> (Asset turnover * Profit Margin * Leverage): </span> <span id="roe"></span><br><br>
+    </div>
+    <div class="height"></div>
+    <button type="button" class="collapsible">Profitability Ratios</button>
+    <div class="content">
+        <span><b>ROA (NPAT)</b> (NPAT/Total Assets): </span> <span id="roa_npat"></span><br><br>
+<!--        <span><b>Profit Margin</b> (NPAT/Sales): </span> <span id="pM"></span><br><br>-->
+<!--        <span><b>Leverage</b> (Total assets/Total Equity): </span> <span id="leverage"></span><br><br>-->
+<!--        <span><b>ROA</b> (Asset turnover * Profit Margin): </span> <span id="roa"></span><br><br>-->
+<!--        <span><b>ROE</b> (Asset turnover * Profit Margin * Leverage): </span> <span id="roe"></span><br><br>-->
+    </div>
+
+    <script>
+        var coll = document.getElementsByClassName("collapsible");
+        var i;
+
+        for (i = 0; i < coll.length; i++) {
+          coll[i].addEventListener("click", function() {
+            this.classList.toggle("active");
+            var content = this.nextElementSibling;
+            if (content.style.maxHeight){
+              content.style.maxHeight = null;
+            } else {
+              content.style.maxHeight = content.scrollHeight + "px";
+            }
+          });
+        }
+    </script>
+
+
 <script src="node_modules/jquery/dist/jquery.slim.min.js"></script>
 <script src="node_modules/popper.js/dist/umd/popper.min.js"></script>
 <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
