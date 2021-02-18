@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="a4m.css">
     <script src="a4m.jsx"></script>
     <title>Accounting for managers</title>
-    
+
 </head>
 <body>
 <center>
@@ -49,12 +49,20 @@
         <div class="height"></div>
         <button type="button" class="collapsible">Cash Conversion Cycle</button>
         <div class="content">
-            <span><b>ROA (NPAT)</b> (NPAT/Total Assets): </span> <span id="roa_npat"></span><br><br>
-            <span><b>ROA (EBIT)</b> (EBIT/Total Assets): </span> <span id="roa_ebit"></span><br><br>
-            <span><b>ROE (NPAT)</b> (NPAT/Total Equity): </span> <span id="roe_npat"></span><br><br>
-            <span><b>ROE (EBIT)</b> (EBIT/Total Equity): </span> <span id="roe_ebit"></span><br><br>
-            <span><b>Profit Margin (NPAT)</b> (NPAT/Sales): </span> <span id="pM_npat"></span><br><br>
-            <span><b>Profit Margin (EBIT)</b> (EBIT/Sales): </span> <span id="pM_ebit"></span><br><br>
+            <span><b>Working Capital = Current Assets</b></span><br><br>
+            <span>Sales: </span><span><input type="text" id="sales_ccc"/></span><br><br>
+            <span>COGS: </span><span><input type="text" id="cogs_ccc"/></span><br><br>
+            <span>Current Assets: </span><span><input type="text" id="cA"/></span><br><br>
+            <span>Current Liabilities: </span><span><input type="text" id="cL"/></span><br><br>
+            <span>Opening Receivables: </span><span><input type="text" id="oR"/></span><br><br>
+            <span>Closing Receivables: </span><span><input type="text" id="cR"/></span><br><br>
+            <span>Opening Inventory: </span><span><input type="text" id="oI"/></span><br><br>
+            <span>Closing Inventory: </span><span><input type="text" id="cI"/></span><br><br>
+            <span><input type="button" onclick="ccc()" value="Calculate" /></span><br><br>
+            <span><b>Net Working Capital</b> (Current Assets - Current Liabilities): </span><span id="nWC"></span><br><br>
+            <span><b>Receivables Turnover</b> (Sales/Avg Receivables): </span><span id="rT"></span><br><br>
+            <span><b>Inventory Turnover</b> (COGS/Avg Inventory): </span><span id="iT"></span><br><br>
+            <span><b>Days in Receivable</b> (Avg Receivables/Sales)*365 : </span><span id="dInR"></span><br><br>
         </div>
     </div>
     <script>
