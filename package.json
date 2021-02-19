@@ -16,7 +16,5 @@
     "lite-server": "^2.6.1",
     "popper.js": "^1.16.1"
   },
-  "dependencies": {
-    "@fortawesome/fontawesome-free": "^5.15.2"
-  }
+  "dependencies": {}
 }
