@@ -28,16 +28,38 @@
 <form name="accounting_form">
     <table>
         <tr class="height"><td>Sales:</td><td><input type="text" id="sales"/></td></tr>
+        <tr class="height"><td>Cost of goods sold (COGS):</td><td><input type="text" id="cogs"/></td></tr>
         <tr class="height"><td>Assets:</td><td><input type="text" id="assets"/></td></tr>
         <tr class="height"><td>Equity:</td><td><input type="text" id="equity"/></td></tr>
         <tr class="height"><td>Profit(NPAT):</td><td><input type="text" id="npat"/></td></tr>
         <tr class="height"><td>Profit(EBIT):</td><td><input type="text" id="ebit"/></td></tr>
+        <tr><td><span>Current Assets: </span><span><input type="text" id="cA"/></span></td><td><span> Current Liabilities: </span><span><input type="text" id="cL"/></span></td></tr>
 
-    <tr><td></td><td><input type="button" onclick="calculate()" value="Calculate" /></td></tr>
     </table>
-</form>
     <div class="height"></div>
+    <input type="button" onclick="calculate()" value="Calculate" />
+</form>
+
     <div class="width">
+
+        <!-- Sustainable Growth Rate -->
+        <div class="height"></div>
+        <button type="button" class="collapsible">Sustainable Growth Rate</button>
+        <div class="content">
+            <div class="height"></div>
+            <span>Dividends Paid out: </span><span><input type="text" id="div_sgr"/></span><br><br>
+
+            <span><b>ROA</b> (NPAT/Total Assets): </span> <span id="roa_sgr"></span><br><br>
+            <span><b>Dividend Payout Ratio</b> (Dividends/NPAT): </span> <span id="dpR"></span><br><br>
+            <span><b>1 - DPR</b> (Dividends/NPAT): </span> <span id="remaining_profit"></span><br><br>
+            <span><b>E/A</b> (Total Equity/Total Assets): </span> <span id="eBya"></span><br><br>
+            <span><b>Sustainable growth rate</b> (ROA x (1 - DPR) / E/A - [(ROA) x (1 - DPA)]): </span> <span id="sgr"></span><br><br>
+
+            <span><input type="button" onclick="sustainable_growth_rate()" value="Calculate" /></span><br><br>
+        </div>
+
+        <!-- DuPont Model -->
+        <div class="height"></div>
         <button type="button" class="collapsible">DuPont Model</button>
         <div class="content">
             <span><b>Asset Turnover</b> (Sales/Total Assets): </span> <span id="aT"></span><br><br>
@@ -46,6 +68,8 @@
             <span><b>ROA</b> (Asset turnover * Profit Margin): </span> <span id="roa"></span><br><br>
             <span><b>ROE</b> (Asset turnover * Profit Margin * Leverage): </span> <span id="roe"></span><br><br>
         </div>
+
+        <!-- Profitability Ratios -->
         <div class="height"></div>
         <button type="button" class="collapsible">Profitability Ratios</button>
         <div class="content">
@@ -55,26 +79,178 @@
             <span><b>ROE (EBIT)</b> (EBIT/Total Equity): </span> <span id="roe_ebit"></span><br><br>
             <span><b>Profit Margin (NPAT)</b> (NPAT/Sales): </span> <span id="pM_npat"></span><br><br>
             <span><b>Profit Margin (EBIT)</b> (EBIT/Sales): </span> <span id="pM_ebit"></span><br><br>
+            <span><b>Gross Margin</b> (Gross Profit/Sales or Revenue): </span> <span id="gross_margin"></span><br><br>
         </div>
+
+        <!-- Cash Conversion Cycle -->
         <div class="height"></div>
         <button type="button" class="collapsible">Cash Conversion Cycle</button>
         <div class="content">
             <span><b>Working Capital = Current Assets</b></span><br><br>
             <span>Sales: </span><span><input type="text" id="sales_ccc"/></span><br><br>
             <span>COGS: </span><span><input type="text" id="cogs_ccc"/></span><br><br>
-            <span>Current Assets: </span><span><input type="text" id="cA"/></span><br><br>
-            <span>Current Liabilities: </span><span><input type="text" id="cL"/></span><br><br>
-            <span>Opening Receivables: </span><span><input type="text" id="oR"/></span><br><br>
-            <span>Closing Receivables: </span><span><input type="text" id="cR"/></span><br><br>
-            <span>Opening Inventory: </span><span><input type="text" id="oI"/></span><br><br>
-            <span>Closing Inventory: </span><span><input type="text" id="cI"/></span><br><br>
-            <span><input type="button" onclick="ccc()" value="Calculate" /></span><br><br>
+
+            <span>Opening Receivables: </span><span><input type="text" id="oR"/></span><span> Closing Receivables: </span><span><input type="text" id="cR"/></span><br><br>
+
+            <span>Opening Inventory: </span><span><input type="text" id="oI"/></span><span> Closing Inventory: </span><span><input type="text" id="cI"/></span><br><br>
+
+            <span>Opening Payables: </span><span><input type="text" id="oP"/></span><span> Closing Payables: </span><span><input type="text" id="cP"/></span><br><br>
+
+            <span>Planned sales growth: </span><span><input type="text" id="pSG"/></span>
+
+            <span><input type="button" onclick="calc_ccc()" value="Calculate" /></span><br><br>
             <span><b>Net Working Capital</b> (Current Assets - Current Liabilities): </span><span id="nWC"></span><br><br>
             <span><b>Receivables Turnover</b> (Sales/Avg Receivables): </span><span id="rT"></span><br><br>
             <span><b>Inventory Turnover</b> (COGS/Avg Inventory): </span><span id="iT"></span><br><br>
             <span><b>Days in Receivable</b> (Avg Receivables/Sales)*365 : </span><span id="dInR"></span><br><br>
+            <span><b>Days in Inventory</b> (Avg Inventory/COGS)*365 : </span><span id="dInI"></span><br><br>
+            <span><b>Days in Payable</b> (Avg Payables/COGS)*365 : </span><span id="dInP"></span><br><br>
+            <span><b>Cash Conversion Cycle</b> (Days in Inventory + Days in Receivable - Days in Payable) : </span><span id="ccc"></span><br><br>
+            <div class="height"></div>
+            <span><b>Sale $ per Inventory $</b> : </span><span id="s$perI$"></span><br><br>
+            <span><b>Additional Cash required (CCC/365 * Planned sales growth)</b> : </span><span id="aCR"></span><br><br>
+        </div>
+
+        <!-- Operating efficiency Ratios -->
+        <div class="height"></div>
+        <button type="button" class="collapsible">Operating efficiency Ratios</button>
+        <div class="content">
+            <div class="height"><b>Fill in Sales, Current assets and liabilities before calculating</b></div>
+            <span><b>Asset Turnover</b> (Sales/Total Assets): </span> <span id="aT_oE"></span><br><br>
+
+            <span>Fixed Assets: </span><span><input type="text" id="fixed_assets"/></span><br><br>
+            <span><b>Fixed Asset Turnover</b> (Sales/Fixed Assets): </span> <span id="fAT_oE"></span><br><br>
+            <span><b>Net Working capital Turnover Ratio</b> (Sales/Net working capital): </span> <span id="nwC_t"></span><br><br>
+
+            <span><input type="button" onclick="operational_efficiency()" value="Calculate" /></span><br><br>
+        </div>
+
+        <!-- Liquidity Ratios -->
+        <div class="height"></div>
+        <button type="button" class="collapsible">Liquidity Ratios</button>
+        <div class="content">
+            <div class="height"><b>Fill in Current assets and liabilities before calculating</b></div>
+            <span><b>Current Ratio</b> (Current Assets/Current Liabilities): </span> <span id="cRatio"></span><br><br>
+
+            <span>Inventory: </span><span><input type="text" id="inventory"/></span><br><br>
+            <span>Quick (Acid Test) Ratio: (Current Assets - Inventory/Current Liabilities)</span><span id="acid_test"></span><br><br>
+
+            <span>Cash: </span><span><input type="text" id="cash"/></span><br><br>
+            <span>Marketable Securities: </span><span><input type="text" id="mSecurities"/></span><br><br>
+            <span>Cash Ratio (Cash + Marketable Securities / Current Liabilities): </span><span id="cash_ratio"></span><br><br>
+
+
+            <span><input type="button" onclick="liquidity_ratios()" value="Calculate" /></span><br><br>
+        </div>
+
+        <!-- Capital Structure Ratios -->
+        <div class="height"></div>
+        <button type="button" class="collapsible">Capital Structure Ratios</button>
+        <div class="content">
+            <div class="height"><b>Fill in Total assets before calculating</b></div>
+            <span>Total Liabilities: </span><span><input type="text" id="total_liabilities"/></span><br><br>
+            <span>Total Equity: </span><span><input type="text" id="total_equity"/></span><br><br>
+            <span><b>Debt to Assets Ratio</b> (Total Liabilities/Total Assets): </span> <span id="d2A"></span><br><br>
+            <span><b>Debt to Equity Ratio</b> (Total Liabilities/Total Equity): </span> <span id="d2E"></span><br><br>
+
+            <span>Interest bearing Liabilities: </span><span><input type="text" id="borrowings"/></span><br><br>
+            <span><b>Debt to Assets Ratio (Interest bearing)</b> (Interest bearing/Total Assets): </span> <span id="b2A"></span><br><br>
+            <span><b>Debt to Equity Ratio (Interest bearing)</b> (Interest bearing/Total Equity): </span> <span id="b2E"></span><br><br>
+
+            <span><input type="button" onclick="capital_structure_ratios()" value="Calculate" /></span><br><br>
+        </div>
+
+        <!-- Solvency Ratios -->
+        <div class="height"></div>
+        <button type="button" class="collapsible">Solvency Ratios</button>
+        <div class="content">
+            <div class="height"><b>Fill in EBIT before calculating</b></div>
+            <div class="height"><b>Check cash flow statement for net cash flow and interest paid</b></div>
+            <span>Interest Expense: </span><span><input type="text" id="interest_expense"/></span><br><br>
+            <span>Net cash flow from operations: </span><span><input type="text" id="cF_op"/></span><br><br>
+            <span>Cash interest paid: </span><span><input type="text" id="cIP"/></span><br><br>
+            <span><b>Interest Coverage (Times interest earned) ratio</b> (EBIT/Interest Expense): </span> <span id="iCR"></span><br><br>
+            <span><b>Cash Cover Ratio</b> (Net Cash flow from operations + Cash Interest Paid/Interest Expense): </span> <span id="cCR"></span><br><br>
+
+            <span>Earning before Interest, Tax & Fixed charges: </span><span><input type="text" id="ebitfc"/></span><br><br>
+            <span>Fixed charges: </span><span><input type="text" id="fC"/></span><br><br>
+            <span><b>Fixed charge Cover Ratio</b> (EBIT&Fixed charges/Interest & Fixed charges): </span> <span id="fcCR"></span><br><br>
+
+            <span><input type="button" onclick="solvency_ratios()" value="Calculate" /></span><br><br>
+        </div>
+
+        <!-- Cash flow based Ratios -->
+        <div class="height"></div>
+        <button type="button" class="collapsible">Cash flow based Ratios</button>
+        <div class="content">
+            <div class="height"><b>Cash flow statement</b></div>
+            <span>Net cash flow (O): </span><span><input type="text" id="nCF_o"/></span><br><br>
+            <span>Dividends: </span><span><input type="text" id="div"/></span><br><br>
+            <span>Cash for Assets: </span><span><input type="text" id="cash4Assets"/></span><br><br>
+            <span>Repayment of long term assets: </span><span><input type="text" id="repayment_loans"/></span><br><br>
+
+
+            <span><b>Cash flow adequacy</b> (Net cash flow (O)/Dividends + Cash Payment for Assets Acquisition + Repayment of Long term debt): </span> <span id="cFA"></span><br><br>
+            <span><b>Investment cash coverage</b> (Cash Payment for Assets Acquisition / Net Cash flow (O)): </span> <span id="iCC"></span><br><br>
+
+
+            <span>Total Liabilities: </span><span><input type="text" id="tot_liabilities"/></span><br><br>
+            <span>Interest bearing liabilities: </span><span><input type="text" id="int_liabilities"/></span><br><br>
+            <span><b>Cash Payback period (Total liabilities)</b> (Total Liabilities / Net Cash flow (O)): </span> <span id="cPP_tL"></span><br><br>
+            <span><b>Cash Payback period (Interrest bearing liabilities)</b> (Interest bearing liabilities / Net Cash flow (O)): </span> <span id="cPP_iL"></span><br><br>
+
+            <span><input type="button" onclick="cashFlow_ratios()" value="Calculate" /></span><br><br>
+        </div>
+
+        <!-- Cash based Efficiency Ratios -->
+        <div class="height"></div>
+        <button type="button" class="collapsible">Cash based Efficiency Ratios</button>
+        <div class="content">
+            <div class="height"><b>Cash flow statement</b></div>
+            <span>Net cash flow (O): </span><span><input type="text" id="Efficiency_nCF_o"/></span><br><br>
+            <span>Sales: </span><span><input type="text" id="Efficiency_sales"/></span><br><br>
+            <span>Assets: </span><span><input type="text" id="Efficiency_assets"/></span><br><br>
+            <span>Equity: </span><span><input type="text" id="Efficiency_equity"/></span><br><br>
+            <span>Income from continuing operations: </span><span><input type="text" id="iCO"/></span><br><br>
+
+
+            <span><b>Cash flow to Sales</b> (Net cash flow (O)/Sales): </span> <span id="cf2s"></span><br><br>
+            <span><b>Continuing Operations Index</b> (Net cash flow (O)/Income from continuing operations): </span> <span id="cOI"></span><br><br>
+            <span><b>Cash Return on Assets</b> (Net cash flow (O)/Total Assets): </span> <span id="cRA"></span><br><br>
+            <span><b>Cash Return on Equity</b> (Net cash flow (O)/Total Equity): </span> <span id="cRE"></span><br><br>
+
+
+
+            <span><input type="button" onclick="cashFlow_efficiency_ratios()" value="Calculate" /></span><br><br>
+        </div>
+
+        <!-- Per Share Ratios -->
+        <div class="height"></div>
+        <button type="button" class="collapsible">Per Share Ratios</button>
+        <div class="content">
+            <div class="height"></div>
+            <span>NPAT: </span><span><input type="text" id="npat_pS"/></span><br><br>
+            <span>Market price per share: </span><span><input type="text" id="mPpS"/></span><br><br>
+            <span>Shares outstanding: </span><span><input type="text" id="sO_pS"/></span><br><br>
+            <span>Dividends Per share: </span><span><input type="text" id="divPS"/></span><br><br>
+            <span>Net cash flow (O) </span><span><input type="text" id="net_cashF_pS"/></span><br><br>
+            <span>Total equity </span><span><input type="text" id="equity_pS"/></span><br><br>
+            <span>Intangible Assets</span><span><input type="text" id="iA_pS"/></span><br><br>
+
+
+            <span><b>Earning Per Share (EPS)</b> (NPAT / Shares outstanding): </span> <span id="eps"></span><br><br>
+            <span><b>Earning Yield</b> (EPS / Market Price per Share): </span> <span id="eY"></span><br><br>
+            <span><b>Price Earnings Ratio (P/E)</b> (Market price per share / Earnings per share): </span> <span id="pe"></span><br><br>
+            <span><b>Dividend Yield</b> (Dividends per share / Market price per share): </span> <span id="dY"></span><br><br>
+            <span><b>Cash flow per share</b> (Net Cash flow (O) / Shares outstanding): </span> <span id="cfPS"></span><br><br>
+            <span><b>Net Assets per share</b> (Total Equity / Shares outstanding): </span> <span id="nAPS"></span><br><br>
+            <span><b>Net tangible Assets per share</b> (Total Equity - Intangible Assets / Shares outstanding): </span> <span id="nTAPS"></span><br><br>
+
+            <span><input type="button" onclick="perShareRatios()" value="Calculate" /></span><br><br>
         </div>
     </div>
+    <div class="height"></div>
+    <div class="height"></div>
     <script>
         var coll = document.getElementsByClassName("collapsible");
         var i;
