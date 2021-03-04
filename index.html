@@ -54,6 +54,7 @@
             <span><b>1 - DPR</b> (Dividends/NPAT): </span> <span id="remaining_profit"></span><br><br>
             <span><b>E/A</b> (Total Equity/Total Assets): </span> <span id="eBya"></span><br><br>
             <span><b>Sustainable growth rate</b> (ROA x (1 - DPR) / E/A - [(ROA) x (1 - DPA)]): </span> <span id="sgr"></span><br><br>
+            <span><b>Sustainable growth rate</b> (ROA x (1 - DPR) / E/A - [(ROA) x (1 - DPA)]): </span> <span id="sgr"></span><br><br>
 
             <span><input type="button" onclick="sustainable_growth_rate()" value="Calculate" /></span><br><br>
         </div>
@@ -102,9 +103,9 @@
             <span><b>Net Working Capital</b> (Current Assets - Current Liabilities): </span><span id="nWC"></span><br><br>
             <span><b>Receivables Turnover</b> (Sales/Avg Receivables): </span><span id="rT"></span><br><br>
             <span><b>Inventory Turnover</b> (COGS/Avg Inventory): </span><span id="iT"></span><br><br>
-            <span><b>Days in Receivable</b> (Avg Receivables/Sales)*365 : </span><span id="dInR"></span><br><br>
-            <span><b>Days in Inventory</b> (Avg Inventory/COGS)*365 : </span><span id="dInI"></span><br><br>
-            <span><b>Days in Payable</b> (Avg Payables/COGS)*365 : </span><span id="dInP"></span><br><br>
+            <span><b>Days in Receivable</b> (Avg Receivables/Sales/365) : </span><span id="dInR"></span><br><br>
+            <span><b>Days in Inventory</b> (Avg Inventory/COGS/365) : </span><span id="dInI"></span><br><br>
+            <span><b>Days in Payable</b> (Avg Payables/COGS/365) : </span><span id="dInP"></span><br><br>
             <span><b>Cash Conversion Cycle</b> (Days in Inventory + Days in Receivable - Days in Payable) : </span><span id="ccc"></span><br><br>
             <div class="height"></div>
             <span><b>Sale $ per Inventory $</b> : </span><span id="s$perI$"></span><br><br>

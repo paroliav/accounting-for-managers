@@ -73,30 +73,47 @@ function calc_ccc() {
 }
 
 let nWC = () => {
-    return document.getElementById('cA').value - document.getElementById('cL').value;
+    currentAssets = parseFloat(document.getElementById('cA').value);
+    currentLiability = parseFloat(document.getElementById('cL').value)
+    return currentAssets - currentLiability;
 }
 
 let rT = () => {
-    const avgReceivables = (document.getElementById('oR').value + document.getElementById('cR').value) / 2;
+    const openingReceivables = parseFloat(document.getElementById('oR').value)
+    const closingReceivables = parseFloat(document.getElementById('cR').value)
+    const avgReceivables = (openingReceivables + closingReceivables) / 2;
     return document.getElementById('sales_ccc').value / avgReceivables;
 }
 
 let iT = () => {
+const openingInventory = parseFloat(document.getElementById('oI').value)
+const closingInventory = parseFloat(document.getElementById('cI').value)
+const avgInventory = (openingInventory + closingInventory) / 2;
     const avgInventory = (document.getElementById('oI').value + document.getElementById('cI').value) / 2;
     return document.getElementById('cogs_ccc').value / avgInventory;
 }
 
 let dInR = () => {
-    return 365 / rT();
+const openingReceivables = parseFloat(document.getElementById('oR').value)
+const closingReceivables = parseFloat(document.getElementById('cR').value)
+const avgReceivables = (openingReceivables + closingReceivables) / 2;
+    return avgReceivables / (document.getElementById('sales_ccc').value /365);
 }
 
 let dInI = () => {
-    return 365 / iT();
+const openingInventory = parseFloat(document.getElementById('oI').value)
+const closingInventory = parseFloat(document.getElementById('cI').value)
+const avgInventory = (openingInventory + closingInventory) / 2;
+    const avgInventory = (document.getElementById('oI').value + document.getElementById('cI').value) / 2;
+    return avgInventory / document.getElementById('cogs_ccc').value /365);
 }
 
 let dInP = () => {
-    const avgPayable = (document.getElementById('oP').value + document.getElementById('cP').value) / 2;
-    return (avgPayable / document.getElementById('cogs_ccc').value) * 365;
+const openingPayable = parseFloat(document.getElementById('oP').value)
+const closingPayable = parseFloat(document.getElementById('cP').value)
+const avgInventory = (openingInventory + closingInventory) / 2;
+    const avgPayable = (openingPayable + closingPayable) / 2;
+    return (avgPayable / (document.getElementById('cogs_ccc').value / 365));
 }
 
 let salePerInv = () => {
