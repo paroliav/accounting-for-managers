@@ -73,8 +73,8 @@ function calc_ccc() {
 }
 
 let nWC = () => {
-    currentAssets = parseFloat(document.getElementById('cA').value);
-    currentLiability = parseFloat(document.getElementById('cL').value)
+    const currentAssets = parseFloat(document.getElementById('cA').value);
+    const currentLiability = parseFloat(document.getElementById('cL').value)
     return currentAssets - currentLiability;
 }
 
@@ -86,43 +86,43 @@ let rT = () => {
 }
 
 let iT = () => {
-const openingInventory = parseFloat(document.getElementById('oI').value)
-const closingInventory = parseFloat(document.getElementById('cI').value)
-const avgInventory = (openingInventory + closingInventory) / 2;
-    const avgInventory = (document.getElementById('oI').value + document.getElementById('cI').value) / 2;
+    const openingInventory = parseFloat(document.getElementById('oI').value)
+    const closingInventory = parseFloat(document.getElementById('cI').value)
+    const avgInventory = (openingInventory + closingInventory) / 2;
     return document.getElementById('cogs_ccc').value / avgInventory;
 }
 
 let dInR = () => {
-const openingReceivables = parseFloat(document.getElementById('oR').value)
-const closingReceivables = parseFloat(document.getElementById('cR').value)
-const avgReceivables = (openingReceivables + closingReceivables) / 2;
+    const openingReceivables = parseFloat(document.getElementById('oR').value)
+    const closingReceivables = parseFloat(document.getElementById('cR').value)
+    const avgReceivables = (openingReceivables + closingReceivables) / 2;
     return avgReceivables / (document.getElementById('sales_ccc').value /365);
 }
 
 let dInI = () => {
-const openingInventory = parseFloat(document.getElementById('oI').value)
-const closingInventory = parseFloat(document.getElementById('cI').value)
-const avgInventory = (openingInventory + closingInventory) / 2;
-    const avgInventory = (document.getElementById('oI').value + document.getElementById('cI').value) / 2;
-    return avgInventory / document.getElementById('cogs_ccc').value /365);
+    const openingInventory = parseFloat(document.getElementById('oI').value)
+    const closingInventory = parseFloat(document.getElementById('cI').value)
+    const avgInventory = (openingInventory + closingInventory) / 2;
+
+    return avgInventory / (document.getElementById('cogs_ccc').value /365);
 }
 
 let dInP = () => {
-const openingPayable = parseFloat(document.getElementById('oP').value)
-const closingPayable = parseFloat(document.getElementById('cP').value)
-const avgInventory = (openingInventory + closingInventory) / 2;
+    const openingPayable = parseFloat(document.getElementById('oP').value)
+    const closingPayable = parseFloat(document.getElementById('cP').value)
     const avgPayable = (openingPayable + closingPayable) / 2;
     return (avgPayable / (document.getElementById('cogs_ccc').value / 365));
 }
 
 let salePerInv = () => {
-    const avgInventory = (document.getElementById('oI').value + document.getElementById('cI').value) / 2;
+    const openingInventory = parseFloat(document.getElementById('oI').value)
+    const closingInventory = parseFloat(document.getElementById('cI').value)
+    const avgInventory = (openingInventory + closingInventory) / 2;
     return document.getElementById('sales_ccc').value / avgInventory;
 }
 
 let ccc = () => {
-    return Math.round(dInI()) + Math.round(dInR()) - Math.round(dInR())
+    return Math.round(dInI()) + Math.round(dInR()) - Math.round(dInP())
 }
 
 let additionalCashReq = () => {
@@ -211,21 +211,21 @@ function cashFlow_ratios() {
 }
 
 let cFAdequacy = () => {
-    const op_expenses = parseFloat(document.getElementById('div')) + parseFloat(document.getElementById('cash4Assets'))
-                        + parseFloat(document.getElementById('repayment_loans'));
-    return parseFloat(document.getElementById('nCF_o')) / op_expenses;
+    const op_expenses = parseFloat(document.getElementById('div').value) + parseFloat(document.getElementById('cash4Assets').value)
+                        + parseFloat(document.getElementById('repayment_loans').value);
+    return parseFloat(document.getElementById('nCF_o').value) / op_expenses;
 }
 
 let investment_cash_coverage = () => {
-    return document.getElementById('cash4Assets') / document.getElementById('nCF_o');
+    return document.getElementById('cash4Assets').value / document.getElementById('nCF_o').value;
 }
 
 let cash_payback_period_TL = () => {
-    return document.getElementById('tot_liabilities') / document.getElementById('nCF_o');
+    return document.getElementById('tot_liabilities').value / document.getElementById('nCF_o').value;
 }
 
 let cash_payback_period_IL = () => {
-    return document.getElementById('int_liabilities') / document.getElementById('nCF_o');
+    return document.getElementById('int_liabilities').value / document.getElementById('nCF_o').value;
 }
 
 function cashFlow_efficiency_ratios() {
@@ -236,19 +236,19 @@ function cashFlow_efficiency_ratios() {
 }
 
 let cashflow2Sales = () => {
-    return document.getElementById('Efficiency_nCF_o') / document.getElementById('Efficiency_sales');
+    return document.getElementById('Efficiency_nCF_o').value / document.getElementById('Efficiency_sales').value;
 }
 
 let cont_op_index = () => {
-    return document.getElementById('Efficiency_nCF_o') / document.getElementById('iCO');
+    return document.getElementById('Efficiency_nCF_o').value / document.getElementById('iCO').value;
 }
 
 let cashRetAssets = () => {
-    return document.getElementById('Efficiency_nCF_o') / document.getElementById('Efficiency_assets');
+    return document.getElementById('Efficiency_nCF_o').value / document.getElementById('Efficiency_assets').value;
 }
 
 let cashRetEquity = () => {
-    return document.getElementById('Efficiency_nCF_o') / document.getElementById('Efficiency_equity');
+    return document.getElementById('Efficiency_nCF_o').value / document.getElementById('Efficiency_equity').value;
 }
 
 function perShareRatios() {
